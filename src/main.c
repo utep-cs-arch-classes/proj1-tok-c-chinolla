@@ -11,22 +11,22 @@
 
 // FUNCTION DECLARATIONS
 int strcmp(char *str1, char *str2);
-int str_to_num(char *str);
 // ------------------------------------------------------------------------------
 
 int main()
 {
   List *history = init_history(); // INITIALIZES HISTORY
-  char **tokens // INITIALIZES TOKENS
-  char str[MAX_LENGTH]
+  char **tokens; // INITIALIZES TOKENS
+  char str[MAX_LENGTH];
   char c;
-  int i, index = 0; // i IS FOR INDEX OF str, index IS FOR get history function
+  int i, index = 0;
+  int IDNum; // i IS FOR INDEX OF str, index IS FOR get history function
 
   printf("\tWELCOME");
   printf("\n--------------------------------------\n");
   printf("COMMANDS: \"q\" TO EXIT\n");
   printf("                  \"history\" TO VIEW HISTORY\n");
-  printf("                  \"!n\" PRINT (n) INDEX HISTORY\n");
+  printf("                  \"!\" PRINT INDEX HISTORY\n");
   printf("ENTER A STRING TO BE TOKENIZED \n");
   while (strcmp(str,"q") != 0) // while str is not the same a 'q'
   {
@@ -48,11 +48,12 @@ int main()
     {
        print_history(history);
     }
-    else if (str[0] == '!') // if user enters '!n'
+    else if (str[0] == '!') // if user enters '!' to view index history
     {
-      index  = str_to_num(str+1);          // If string begins with !, get string of item
-      printf("%s", get_history(history,index)); // with id of the number that follows !
-      printf("%d\n",index);
+      printf("ENTER ID NUMBER: ");
+      scanf("%d\n", &IDNum);
+      printf("%s", get_history(history, IDNum));
+
     }
     else
     {
@@ -75,17 +76,4 @@ int strcmp(char *str1, char *str2)
     if ( str1[i] == '\0') return 0; // If loops reaches null terminal character, the strings are
   }                                //  equal.
   return str1[i] - str2[i]; // Returns positive number if str1 > str2, otherwise negative.
-}
-
-// Converts a string number to an integer
-int str_to_num(char *str)
-{
-  int number = 0;
-  int i = 0;
-  while (str[i] != '\0') {           // For each digit in string multiply by 10
-    number = number * 10;
-    number = number + (str[i]-'0');  // Gets the numeric value of the character and adds
-    i++;
-  }
-  return number;
 }
